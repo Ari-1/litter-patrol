@@ -13,15 +13,16 @@ class App extends Component {
     this.startGame();
     console.log(this.state.bins);
   }
-
+// at each interval, startGame is updating state to this.getBinsState
   startGame() {
     setInterval(() => {
       this.setState( {
         bins: this.getBinsState()
       });
-    }, 1500);
+    }, 800);
   }
 
+// randomizing where the trash is placed at each interval
   getBinsState() {
     let bins = [];
     for (let i = 0; i < 9; i++){
@@ -32,13 +33,15 @@ class App extends Component {
   }
 
   onTrashClicked = () => {
-    // Fill this in!
+    let value = parseInt(this.state.points)
+    this.setState({points: (value += 1) })
   }
 
   render() {
     const bins = this.state.bins.map((bin, index) => {
       return (
-        <Trash key={`trash-${index}`} />
+        <Trash key={`trash-${index}`} isTrashVisible={bin.isTrashVisible} addPoints={this.onTrashClicked}
+        id={index} />
       );
     });
 
